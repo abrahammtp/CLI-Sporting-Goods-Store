@@ -1,0 +1,40 @@
+{
+  "name": "cli-store",
+  "version": "1.0.0",
+  "description": "We are going to create a CLI Application. It is going to run like a store, allowing us to display different products, their prices, stock level and also update those items.",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abrahammtp/CLI-Store.git"
+  },
+  "keywords": [
+    "npm",
+    "inquirer",
+    "mySQL",
+    "CLI",
+    "terminal",
+    "command-line",
+    "JavaScript",
+    "store",
+    "products",
+    "database",
+    "data",
+    "stock-quantity",
+    "price",
+    "items"
+  ],
+  "author": "Abraham Torres Pinto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abrahammtp/CLI-Store/issues"
+  },
+  "homepage": "https://github.com/abrahammtp/CLI-Store#readme",
+  "dependencies": {
+    "cli-table": "^0.3.1",
+    "inquirer": "^6.2.2",
+    "mysql": "^2.16.0"
+  }
+}
