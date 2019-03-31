@@ -4,11 +4,6 @@ var inquirer = require("inquirer");
 
 var Table = require("cli-table");
 
-// var table = new Table ({
-//     head: ['ID', 'Product Name', 'Department', 'Price', 'In Stock'],
-//     colWidths: [6, 25, 25, 10, 10]
-// });
-
 var connection = mysql.createConnection({
     host: "localhost",
     port: 8889,
@@ -19,9 +14,8 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
     if (err) throw err;
-    console.log("Connected as id: " + connection.threadId);
     displayProducts();
-    // connection.end()
+    // connection.end();
 })
 
 function displayProducts() {
@@ -38,33 +32,81 @@ function displayProducts() {
             )
         }
         console.log(table.toString());
-        beginPurchase()
+        ifShopping()
     }
     )
 }
 
-function beginPurchase() {
-    connection.query('SELECT * FROM `products`', function (err, res) {
-        if (err) throw err;
-        inquirer
-            .prompt({
-                name: "itemSelection",
-                type: "rawlist",
-                message: "Select the item you would like to buy using the item's ID",
-                choices: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-            }).then(function (answer){
-                if (answer.itemSelection === res.item_id) {
-                    inquirer
-                        .prompt({
-                            name: "itemQuantity",
-                            type: "input",
-                            message: "Please, enter the quantity you wish to buy"
-                        })
-                }
-                else{
-                    connection.end();
-                }
-            })
+function ifShopping() {
+    inquirer
+        .prompt({
+            name: "shopping",
+            type: "list",
+            message: "Would you like to shop for an item?",
+            choices: [
+                "Yes", "No"
+            ]
+        }).then(function (answer) {
+            switch (answer.shopping) {
+                case "Yes":
+                    beginPurchase();
+                    break;
 
-    })
+                case "No":
+                    connection.end();
+                    break;
+            }
+        });
+}
+
+function beginPurchase() {
+    inquirer
+        .prompt([
+            {
+            name: "item_id",
+            type: "input",
+            message: "Select the item you would like to buy using the item's ID",
+            validate: function(value) {
+                if (isNaN(value) === false) {
+                  return true;
+                }
+                return false;
+              }
+        },
+        {
+            name: "quantity",
+            type: "input",
+            message: "Please, enter the quantity you would like to buy",
+            validate: function(value) {
+                if (isNaN(value) === false) {
+                  return true;
+                }
+                return false;
+              }
+        }
+    ]).then(function (answer) {
+            var query = "SELECT product_name, price, stock_quantity FROM products WHERE ?";
+            connection.query(query, { item_id: answer.item_id },
+            function(err, res) {
+                if (err) throw err;
+                // console.log(res.price);
+                console.log("You have selected: " + res[0].product_name + " for a total of $ " + res[0].price*answer.quantity);
+            }
+            )
+            // var query = connection.query(
+            //     "UPDATE products SET ? WHERE ?",
+            //     [
+            //         {
+            //             stock_quantity: res.stock_quantity - answer.quantity
+            //         },
+            //         {
+            //             item_id: answer.item_id
+            //         }
+            //     ],
+            //     function(err, res) {
+            //         console.log("Thank you for your purchase!")
+            //     }
+            // )
+            connection.end();
+        })
 }
