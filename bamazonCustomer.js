@@ -88,8 +88,8 @@ function beginPurchase() {
             connection.query(query, { item_id: answer.item_id },
             function(err, res) {
                 if (err) throw err;
-                if (answer.item_id >= answer.quantity) {
                 var selectResult = res;
+                if (answer.quantity <= selectResult[0].stock_quantity) {
                 console.log("\n");
                 console.log("You have selected: " + res[0].product_name + " for a total of $ " + res[0].price*answer.quantity);
                 var query = "UPDATE products SET ? WHERE ?";
