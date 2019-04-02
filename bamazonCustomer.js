@@ -88,7 +88,9 @@ function beginPurchase() {
             connection.query(query, { item_id: answer.item_id },
             function(err, res) {
                 if (err) throw err;
+                if (answer.item_id >= answer.quantity) {
                 var selectResult = res;
+                console.log("\n");
                 console.log("You have selected: " + res[0].product_name + " for a total of $ " + res[0].price*answer.quantity);
                 var query = "UPDATE products SET ? WHERE ?";
                 connection.query(query, [
@@ -100,12 +102,19 @@ function beginPurchase() {
                     }
                 ],
                     function(err, res) {
-                        // console.log(err, res);
-                        console.log("Thank you for your purchase!")
-                        // connection.end();
+                        console.log("\n");
+                        console.log("Thank you for your purchase, we hope to see you soon!");
+                        console.log("\n");
                         displayProducts();
                     }
                     )
+                } else {
+                    console.log("\n");
+                    console.log("I am sorry, we do not have enough items in stock. Please select a different product");
+                    console.log("\n");
+                    displayProducts();
+                }
+
             }
             );
 
