@@ -15,7 +15,6 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
     if (err) throw err;
     displayProducts();
-    // connection.end();
 })
 
 function displayProducts() {
@@ -89,24 +88,26 @@ function beginPurchase() {
             connection.query(query, { item_id: answer.item_id },
             function(err, res) {
                 if (err) throw err;
-                // console.log(res.price);
+                var selectResult = res;
                 console.log("You have selected: " + res[0].product_name + " for a total of $ " + res[0].price*answer.quantity);
+                var query = "UPDATE products SET ? WHERE ?";
+                connection.query(query, [
+                    {
+                        stock_quantity: selectResult[0].stock_quantity - answer.quantity
+                    },
+                    {
+                        item_id: answer.item_id
+                    }
+                ],
+                    function(err, res) {
+                        // console.log(err, res);
+                        console.log("Thank you for your purchase!")
+                        // connection.end();
+                        displayProducts();
+                    }
+                    )
             }
-            )
-            // var query = connection.query(
-            //     "UPDATE products SET ? WHERE ?",
-            //     [
-            //         {
-            //             stock_quantity: res.stock_quantity - answer.quantity
-            //         },
-            //         {
-            //             item_id: answer.item_id
-            //         }
-            //     ],
-            //     function(err, res) {
-            //         console.log("Thank you for your purchase!")
-            //     }
-            // )
-            connection.end();
+            );
+
         })
 }
