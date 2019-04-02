@@ -110,7 +110,7 @@ function beginPurchase() {
                     )
                 } else {
                     console.log("\n");
-                    console.log("I am sorry, we do not have enough items in stock. Please select a different product");
+                    console.log("I am sorry, we do not have enough items in stock. Please, change your item quantity or select a different product");
                     console.log("\n");
                     displayProducts();
                 }
