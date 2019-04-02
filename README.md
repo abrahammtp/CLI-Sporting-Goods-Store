@@ -29,3 +29,5 @@ Now, we are going to use a few gifs to illustrate how our application works.
 ![notshopping](https://user-images.githubusercontent.com/46465000/55370698-54d64900-54c9-11e9-99cb-8a83571bc476.gif)
 
   In this case our customer enters the store, but they decide not to make a purchase. They are going to select "Exit" which is going to take them out of the session and start a new one, so the customer can one more time decide if they want to make a purchase or not.
+  
+This is a link to my personal portfolio, I will be honored if you would take a look at it! https://abrahammtp.github.io/Updated-Portfolio/
