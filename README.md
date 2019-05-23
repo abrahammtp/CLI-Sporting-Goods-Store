@@ -1,6 +1,6 @@
-# CLI-Store/Bamazon
+# Sporting Goods Store
 
-  Bamazon is a CLI application that lets us create our own store. For this project, we created a sporting goods store. The customer/user is going to interact with the store using the terminal/command line and will be able to see the store's inventory, and also make purchases. We are using different technologies in this application, such as:
+  Sporting Goods Store is a CLI application that lets us create our own store. For this project, we created a sporting goods store. The customer/user is going to interact with the store using the terminal/command line and will be able to see the store's inventory, and also make purchases. We are using different technologies in this application, such as:
 
       * npm
       * Node.js
